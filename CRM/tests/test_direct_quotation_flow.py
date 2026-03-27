@@ -1,6 +1,6 @@
-from pages.CRM.login_page import LoginPage
-from pages.CRM.home_page import HomePage
-from pages.CRM.quotation_page import QuotationPage
+from CRM.pages import LoginPage
+from CRM.pages import HomePage
+from CRM.pages import QuotationPage
 
 def test_create_direct_quotation(driver):
 

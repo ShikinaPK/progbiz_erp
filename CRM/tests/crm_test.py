@@ -1,8 +1,8 @@
-from pages.CRM.login_page import LoginPage
-from pages.CRM.home_page import HomePage
-from pages.CRM.enquiry_page import EnquiryPage
-from pages.CRM.enquiry_quotation import EnquiryQuotationPage
-from tests.conftest import driver
+from CRM.pages import LoginPage
+from CRM.pages import HomePage
+from CRM.pages import EnquiryPage
+from CRM.pages import EnquiryQuotationPage
+from CRM.tests.conftest import driver
 
 
 def test_create_enquiry(driver):
