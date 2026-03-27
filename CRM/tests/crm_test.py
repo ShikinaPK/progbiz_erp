@@ -1,7 +1,7 @@
-from pages.login_page import LoginPage
-from pages.home_page import HomePage
-from pages.enquiry_page import EnquiryPage
-from pages.enquiry_quotation import EnquiryQuotationPage
+from pages.CRM.login_page import LoginPage
+from pages.CRM.home_page import HomePage
+from pages.CRM.enquiry_page import EnquiryPage
+from pages.CRM.enquiry_quotation import EnquiryQuotationPage
 from tests.conftest import driver
 
 
