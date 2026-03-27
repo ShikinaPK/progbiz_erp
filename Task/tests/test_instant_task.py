@@ -39,7 +39,6 @@ def test_create_instant_task(driver):
         task_page.open_task_modal()
 
         task_page.create_instant_task()
-#--------------- Worked Perfectly -----------------------
 
 #-----------------------Assertion-------------------
 def test_create_instant_task(driver):
