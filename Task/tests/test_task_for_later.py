@@ -1,0 +1,94 @@
+import pytest
+from selenium import webdriver
+
+from Task.Pages.login_page import LoginPage
+from Task.Pages.task_page import TaskCreationPage
+
+
+@pytest.fixture
+def driver():
+    from selenium.webdriver.chrome.options import Options
+
+    chrome_options = Options()
+    chrome_options.add_argument("--disable-notifications")
+
+    driver = webdriver.Chrome(options=chrome_options)
+    driver.maximize_window()
+
+    yield driver
+    driver.quit()
+
+
+# -------- CREATE TASK FOR LATER --------
+def test_create_task_for_later(driver):
+
+    login = LoginPage(driver)
+
+    login.open("https://erptest.prog-biz.com")
+    login.enter_company_code("Globrootstest")
+    login.enter_username("sadiqh")
+    login.enter_password("123")
+
+    login.click_signin()
+    login.validate_login_success()
+
+    task_page = TaskCreationPage(driver)
+    task_page.open_task_modal()
+
+    scheduled_date = task_page.create_task_for_later(days=1)
+
+    print("Scheduled task created for:", scheduled_date)
+
+
+# -------- VALIDATE TASK FOR LATER --------
+def test_task_for_later_search_validation(driver):
+
+    login = LoginPage(driver)
+
+    login.open("https://erptest.prog-biz.com")
+    login.enter_company_code("Globrootstest")
+    login.enter_username("sadiqh")
+    login.enter_password("123")
+
+    login.click_signin()
+    login.validate_login_success()
+
+    task_page = TaskCreationPage(driver)
+    task_page.open_task_modal()
+
+#Validating Manually added Task Name
+    # task_name = "Online meeting - Task for Later Task 4"
+    # task_page.create_task_for_later()
+
+#Validating Automated ask Name
+    task_name = task_page.create_task_for_later()
+
+    # MY TASK
+    task_page.open_my_tasks()
+    task_page.search_task(task_name)
+    task_page.verify_task_in_results(task_name)
+
+    # ---------- START → HOLD → END FLOW ----------
+
+    # Step 1: Open task
+    task_page.open_first_task()
+
+    # Step 2: Start task
+    task_page.click_start()
+
+    # Step 3: Reopen SAME task (NO menu, NO search)
+    task_page.open_first_task()
+
+    # Step 4: Hold task
+    task_page.click_hold()
+
+    # Step 5: Reopen AGAIN
+    task_page.open_first_task()
+
+    # Step 6: End task
+    task_page.click_end()
+
+    # CREATED TASK
+    task_page.open_created_tasks()
+    task_page.search_task(task_name)
+    task_page.verify_task_in_results(task_name)
